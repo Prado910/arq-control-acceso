@@ -24,7 +24,7 @@ void setEstado(EstadoSistema nuevoEstado) {
     case ST_CONFIG:
       limpiarEntrada();
       iniciarConfigMenu();
-      setLED(false, true, true);
+      setLED(false, false, true);
       digitalWrite(PIN_BUZZER, BUZZER_OFF);
       break;
 

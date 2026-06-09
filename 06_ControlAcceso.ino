@@ -74,6 +74,10 @@ void accesoAutorizado(byte rol, bool porRFID) {
 
   abrirCerradura();
   setEstado(ST_MONITOR_AMBIENTAL);
+
+  // Mostrar usuario que ingresó
+  mensajeTemporal = "ING:" + String(config.usuarios[rol].nombre);
+  tMensaje = relojSistema() + T_MENSAJE_INGRESO;
 }
 
 /**
@@ -87,11 +91,16 @@ void accesoFallido(String motivo) {
   mensajeTemporal = motivo;
   tMensaje = relojSistema() + T_ERROR;
 
-  setLED(true, false, false);
+  setLED(false, false, true);
 
   if (intentosFallidos >= MAX_INTENTOS) {
     mensajeTemporal = "Max intentos";
+
+    // LED rojo SOLO cuando el sistema se bloquea
+    setLED(true, false, false);
+
     dispararAlarma(ALR_INTENTOS);
+    return;
   }
 }
 

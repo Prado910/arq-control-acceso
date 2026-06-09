@@ -1,5 +1,5 @@
 /**
- * @file SistemaSeguridad_Modular.ino
+ * @file arq-control-acceso.ino
  * @brief Sistema de control de acceso, configuración, monitoreo ambiental e intrusión.
  *
  * Proyecto de Arquitectura Computacional basado en Arduino Mega 2560.
@@ -86,7 +86,6 @@
 #define SERVO_CERRADO 0
 #define SERVO_ABIERTO 90
 
-// Si tu buzzer suena al revés, invierte estos dos valores.
 #define BUZZER_ON HIGH
 #define BUZZER_OFF LOW
 
@@ -102,6 +101,7 @@
 
 #define T_APERTURA_SERVO 7000UL
 #define T_ERROR 1500UL
+#define T_MENSAJE_INGRESO 2500UL
 #define T_ALARMA_INTENTOS 8000UL
 #define T_BLOQUEO 10000UL
 
@@ -125,11 +125,11 @@
 // UMBRALES DE SENSORES
 // =====================================================
 
-#define UMBRAL_TEMP_BAJA 50.0
-#define UMBRAL_LUZ_BAJA 700
+#define UMBRAL_TEMP_BAJA 28
+#define UMBRAL_LUZ_BAJA 400
 
 #define UMBRAL_HALL 600
-#define UMBRAL_SONIDO 600
+#define UMBRAL_SONIDO 100
 
 // =====================================================
 // EEPROM
@@ -280,6 +280,9 @@ bool botonEstadoEstable = false;
 
 String mensajeTemporal = "";
 
+bool ledErrorActivo = false;
+unsigned long tApagarLedError = 0;
+
 // =====================================================
 // PROTOTIPOS
 // =====================================================
@@ -408,4 +411,5 @@ void loop() {
   actualizarMaquinaEstados();
   tareaAlarma();
   tareaLCD();
+  Serial.println(valorLuz);
 }

@@ -19,9 +19,14 @@ void tareaBoton() {
       botonEstadoEstable = lectura;
 
       if (botonEstadoEstable) {
-        intentosFallidos = 0;
-        cerrarCerradura();
-        setEstado(ST_INICIO);
+        // El botón SOLO vuelve a inicio desde CONFIG o BLOQUEO
+        if (estadoActual == ST_CONFIG || estadoActual == ST_BLOQUEO) {
+          intentosFallidos = 0;
+          limpiarEntrada();
+          cerrarCerradura();
+          setLED(false, false, false);
+          setEstado(ST_INICIO);
+        }
       }
     }
   }

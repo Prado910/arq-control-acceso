@@ -168,10 +168,16 @@ void procesarTeclaConfig(char tecla) {
  */
 void procesarTeclaMonitoreo(char tecla) {
   if (estadoActual == ST_MONITOR_AMBIENTAL && tecla == '*') {
-    iniciarAuthMasterConfig();
+    limpiarEntrada();
+    cerrarCerradura();
+    setEstado(ST_INICIO);
+    return;
   }
 
   else if (estadoActual == ST_MONITOR_INTRUSOS && tecla == '#') {
-    iniciarAuthMasterConfig();
+    limpiarEntrada();
+    cerrarCerradura();
+    setEstado(ST_INICIO);
+    return;
   }
 }
